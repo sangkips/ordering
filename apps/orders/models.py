@@ -28,6 +28,7 @@ class Order(models.Model):
     
     def __str__(self):
         return f"Order by {self.customer.username}"
+
 class OrderDetail(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
