@@ -32,6 +32,7 @@ urlpatterns = [
         'redoc', cache_timeout=0), name='schema-redoc'),
     path('favicon.ico', favicon_view),
     path('admin/', admin.site.urls),
+    path('auth/', include('djoser.urls.jwt')),
 ]
 urlpatterns += public_apis
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
