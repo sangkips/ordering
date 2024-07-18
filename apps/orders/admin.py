@@ -7,7 +7,7 @@ from apps.orders.models import Item, Order, OrderDetail
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ["name", "price"]
+    list_display = ["name", "price", "created_at"]
     list_filter = ["price", "created_at", "name"]
     
 @admin.register(OrderDetail)
