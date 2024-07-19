@@ -10,7 +10,7 @@ from drf_yasg import openapi
 from django.urls import re_path as url, include
 
 public_apis = [
-    url(r'^api/auth/', include("apps.auth_app.urls")),
+    url(r'^api/account/', include("apps.auth_app.urls")),
      url(r'^api/order/', include("apps.orders.urls")),
 ]
 

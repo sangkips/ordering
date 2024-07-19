@@ -3,12 +3,14 @@ from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from django.shortcuts import get_object_or_404
+from drf_yasg import openapi
 
 from apps.orders.models import Item, Order, OrderDetail
 from apps.orders.serializers import OrderCreateSerializer, OrderDetailsSerializer, ProductCreateSerializer
 # Create your views here.
 
 class ProductView(generics.GenericAPIView):
+    queryset = Item.objects.all()
     serializer_class = ProductCreateSerializer
     permission_classes = [IsAuthenticated]
     
@@ -28,6 +30,7 @@ class ProductView(generics.GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ProductDetailView(generics.GenericAPIView):
+    queryset = Item.objects.all()
     serializer_class = ProductCreateSerializer
     permission_classes = [IsAuthenticated]
     
@@ -53,6 +56,7 @@ class ProductDetailView(generics.GenericAPIView):
 
   
 class OrderView(generics.GenericAPIView):
+    queryset = Order.objects.all()
     serializer_class = OrderCreateSerializer
     permission_classes = [IsAuthenticated]
     
@@ -74,6 +78,7 @@ class OrderView(generics.GenericAPIView):
     
 class OrderViewById(generics.GenericAPIView):
     serializer_class = OrderCreateSerializer
+    queryset = Order.objects.all()
 
     @swagger_auto_schema(operation_summary="Get an order by ID")
     def get(self, request, pk):
@@ -84,6 +89,7 @@ class OrderViewById(generics.GenericAPIView):
     
 class OrderDetailsView(generics.GenericAPIView):
     serializer_class = OrderDetailsSerializer
+    queryset = OrderDetail.objects.all()
     permission_classes = [IsAuthenticated]
     
     def get(self, request):
@@ -103,6 +109,7 @@ class OrderDetailsView(generics.GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             
 class OrderDetailById(generics.GenericAPIView):
+    queryset = OrderDetail.objects.all()
     serializer_class = OrderDetailsSerializer
     permission_classes = [IsAuthenticated]  
     
@@ -112,4 +119,34 @@ class OrderDetailById(generics.GenericAPIView):
         
         serializer = self.serializer_class(instance=order)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class OrderSearchView(generics.GenericAPIView):
+    serializer_class = OrderDetailsSerializer
+    permission_classes = [IsAdminUser, IsAuthenticated]
     
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                'start_date', openapi.IN_QUERY,
+                description="Start date (YYYY-MM-DD 00:00:00)",
+                type=openapi.FORMAT_DATE
+            ),
+            openapi.Parameter(
+                'end_date', openapi.IN_QUERY,
+                description="End date (YYYY-MM-DD 00:00:00)",
+                type=openapi.FORMAT_DATE
+            ),
+        ]
+    )
+    def get(self, request):
+        # filter() with range date fields
+        # Ensure its timezone aware
+        start_date = request.GET.get('start_date')
+        end_date = request.GET.get('end_date')
+        
+        if start_date and end_date:
+            search = OrderDetail.objects.filter(created_at__range=[start_date, end_date])
+            serializer = self.serializer_class(search, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        

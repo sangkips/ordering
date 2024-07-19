@@ -33,6 +33,7 @@ class CustomerViewAll(generics.GenericAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 class CustomerByIdView(generics.GenericAPIView):
+    queryset = AuthUser.objects.all()
     serializer_class = UserCreateSerializer
     permission_classes = [IsAuthenticated]
     
