@@ -4,6 +4,7 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from django.shortcuts import get_object_or_404
 from drf_yasg import openapi
+from django.utils import timezone
 
 from apps.orders.models import Item, Order, OrderDetail
 from apps.orders.serializers import OrderCreateSerializer, OrderDetailsSerializer, ProductCreateSerializer
@@ -148,5 +149,11 @@ class OrderSearchView(generics.GenericAPIView):
             search = OrderDetail.objects.filter(created_at__range=[start_date, end_date])
             serializer = self.serializer_class(search, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({
+                "error": "Both start_date and end_date are required."
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
         
