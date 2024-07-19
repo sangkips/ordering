@@ -14,7 +14,7 @@ migrations:
 .PHONY: superuser
 superuser:
 	python -m manage createsuperuser
-	
+
 .PHONY: test
 test:
 	python -m manage test
@@ -23,7 +23,3 @@ test:
 run:
 	python -m manage runserver
 
-
-.PHONY: lint
-lint:
-	pre-commit run --all-files
