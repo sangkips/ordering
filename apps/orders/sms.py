@@ -1,6 +1,5 @@
 import requests
-from decouple import Config
-config = Config()
+from decouple import config
 
 url = "https://api.sandbox.africastalking.com/version1/messaging"
 
