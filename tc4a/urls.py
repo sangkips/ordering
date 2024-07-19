@@ -7,11 +7,11 @@ from django.urls import path, include
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from django.urls import re_path as url, include
+from django.urls import re_path as url
 
 public_apis = [
-    url(r'^api/account/', include("apps.auth_app.urls")),
-     url(r'^api/order/', include("apps.orders.urls")),
+    url(r"^api/account/", include("apps.auth_app.urls")),
+    url(r"^api/order/", include("apps.orders.urls")),
 ]
 
 schema_view = get_schema_view(
@@ -23,22 +23,27 @@ schema_view = get_schema_view(
     public=True,
     permission_classes=(permissions.AllowAny,),
 )
-favicon_view = RedirectView.as_view(url='/static/favicon.ico', permanent=True)
+favicon_view = RedirectView.as_view(url="/static/favicon.ico", permanent=True)
 
 urlpatterns = [
-    path('developer/docs', schema_view.with_ui(
-        'swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('developer/doc', schema_view.with_ui(
-        'redoc', cache_timeout=0), name='schema-redoc'),
-    path('favicon.ico', favicon_view),
-    path('admin/', admin.site.urls),
-    path('auth/', include('djoser.urls.jwt')),
+    path(
+        "developer/docs",
+        schema_view.with_ui("swagger", cache_timeout=0),
+        name="schema-swagger-ui",
+    ),
+    path(
+        "developer/doc",
+        schema_view.with_ui("redoc", cache_timeout=0),
+        name="schema-redoc",
+    ),
+    path("favicon.ico", favicon_view),
+    path("admin/", admin.site.urls),
+    path("auth/", include("djoser.urls.jwt")),
 ]
 urlpatterns += public_apis
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-admin.site.site_header = config('ADMIN_SITE_HEADER')
-admin.site.site_title = config('ADMIN_SITE_TITLE')
-admin.site.index_title = config('ADMIN_SITE_INDEX_TITLE')
-
+admin.site.site_header = config("ADMIN_SITE_HEADER")
+admin.site.site_title = config("ADMIN_SITE_TITLE")
+admin.site.index_title = config("ADMIN_SITE_INDEX_TITLE")

@@ -4,15 +4,13 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('auth_app', '0001_initial'),
+        ("auth_app", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelManagers(
-            name='authuser',
-            managers=[
-            ],
+            name="authuser",
+            managers=[],
         ),
     ]
