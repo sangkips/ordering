@@ -4,10 +4,10 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from django.shortcuts import get_object_or_404
 from drf_yasg import openapi
-from django.utils import timezone
 
 from apps.orders.models import Item, Order, OrderDetail
 from apps.orders.serializers import OrderCreateSerializer, OrderDetailsSerializer, ProductCreateSerializer
+from apps.orders.sms import make_post_request
 # Create your views here.
 
 class ProductView(generics.GenericAPIView):
@@ -91,7 +91,7 @@ class OrderViewById(generics.GenericAPIView):
 class OrderDetailsView(generics.GenericAPIView):
     serializer_class = OrderDetailsSerializer
     queryset = OrderDetail.objects.all()
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     
     def get(self, request):
         items = OrderDetail.objects.all()
@@ -100,13 +100,17 @@ class OrderDetailsView(generics.GenericAPIView):
         
         return Response(serializer.data, status=status.HTTP_200_OK)
     
+    
     @swagger_auto_schema(operation_summary="Create an an order line")
     def post(self, request):
+        
         serializer = self.serializer_class(data=request.data)
+        
         if serializer.is_valid():
             serializer.save()
-            
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            send_sms = make_post_request()
+            if send_sms.status_code == 201:
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             
 class OrderDetailById(generics.GenericAPIView):
@@ -155,5 +159,3 @@ class OrderSearchView(generics.GenericAPIView):
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
-        
-        
