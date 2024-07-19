@@ -33,9 +33,9 @@ jobs:
       - name: Ruff check
         uses: chartboost/ruff-action@v1
           
-      # - name: Run Tests
-      #   run: |
-      #     make test
+      - name: Run Tests
+        run: |
+          make test
 
       - name: Set environment variables
         run: echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
