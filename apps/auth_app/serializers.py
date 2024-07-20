@@ -38,7 +38,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
         ).exists()
         if phone_number:
             raise ValidationError(
-                {"success": False, "message": "Pnone number already exists"},
+                {"success": False, "message": "Phone number already exists"},
                 code=status.HTTP_403_FORBIDDEN,
             )
 

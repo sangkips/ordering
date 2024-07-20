@@ -9,9 +9,11 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 class CustomUserManager(BaseUserManager):
     # overide user_create method
-    def create_user(self, email, password, **extra_fields):
+    def create_user(self, username, email, password, **extra_fields):
+        if not username:
+            raise ValueError("The username field is required")
         if not email:
-            raise ValueError("Please set a valid email. Email")
+            raise ValueError("Please set a valid email")
         email = self.normalize_email(email)
         email = email.lower()
         new_user = self.model(email=email, **extra_fields)

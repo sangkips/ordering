@@ -99,7 +99,7 @@ class OrderViewById(generics.GenericAPIView):
 class OrderDetailsView(generics.GenericAPIView):
     serializer_class = OrderDetailsSerializer
     queryset = OrderDetail.objects.all()
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         items = OrderDetail.objects.all()
