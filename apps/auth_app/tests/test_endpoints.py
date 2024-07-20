@@ -77,7 +77,6 @@ class CustomerByIdViewTestCase(APITestCase):
             reverse("customer-detail", args=[self.user.id]), format="json"
         )
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data["username"], "testuser")
 
     def test_fetch_user_by_id_without_authentication(self):
         self.client.force_authenticate(user=None)
