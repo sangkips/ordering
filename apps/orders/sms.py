@@ -11,7 +11,7 @@ headers = {
 
 data = {
     "username": config("AFRICASTALKING_USERNAME", default='sandbox'),
-    "from": config("SMS_SENDER"),
+    "from": config("SMS_SENDER", default='1111'),
     "message": "Thank you for your order. We will reach out to you shortly.",
     "to": "+254729640480",
 }
