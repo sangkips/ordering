@@ -48,4 +48,5 @@ jobs:
           ADMIN_SITE_TITLE: ${{ secrets.ADMIN_SITE_TITLE }}
           ADMIN_SITE_INDEX_TITLE: ${{ secrets.ADMIN_SITE_INDEX_TITLE }}
           DEBUG: ${{ secrets.DEBUG }}
+          API_VERSION: ${{ secrets.API_VERSION }}
 
