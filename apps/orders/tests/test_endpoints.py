@@ -91,9 +91,7 @@ class OrderViewTestCase(APITestCase):
         )
         self.customer = self.user
         self.client.force_authenticate(user=self.user)
-        self.order = {
-            "customer": self.customer.id, 
-            "payment_method": "CASH"}
+        self.order = {"customer": self.customer.id, "payment_method": "CASH"}
 
     def test_create_order(self):
         response = self.client.post(reverse("orders"), self.order, format="json")
@@ -210,11 +208,11 @@ class OrderSearchViewTestCase(APITestCase):
         )
 
         self.assertEqual(response.status_code, 200)
-        
-        
+
     def test_search_orders_with_missing_dates(self):
         response = self.client.get(reverse("order-search"), format="json")
-        
-        self.assertEqual(response.status_code, 400)
-        self.assertEqual(response.data["error"], "Both start_date and end_date are required.")
 
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(
+            response.data["error"], "Both start_date and end_date are required."
+        )
