@@ -89,8 +89,11 @@ class OrderViewTestCase(APITestCase):
             email="testuser@example.com",
             phone_number="+254777777777",
         )
-        self.order = {"customer": self.user.id, "payment_method": "CASH"}
+        self.customer = self.user
         self.client.force_authenticate(user=self.user)
+        self.order = {
+            "customer": self.customer.id, 
+            "payment_method": "CASH"}
 
     def test_create_order(self):
         response = self.client.post(reverse("orders"), self.order, format="json")
