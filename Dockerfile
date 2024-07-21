@@ -48,9 +48,9 @@ USER 1001
 
 EXPOSE $APP_PORT
 
-COPY run.sh ${APP_HOME}
+RUN chmod +x run.sh
 
-RUN sudo chmod +x ${APP_HOME}/run.sh
+RUN cp run.sh ${APP_HOME}
 
 CMD ["./run.sh"]
 
