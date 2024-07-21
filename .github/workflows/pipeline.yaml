@@ -12,7 +12,7 @@ env:
   ECS_CLUSTER: ecs-cluster
   ECS_TASK_DEFINITION: ecs-app-task
   CONTAINER_NAME: order-app
-  SECRET_KEY: ${{ secrets.SECRET_KEY }}
+  # SECRET_KEY: ${{ secrets.SECRET_KEY }}
   AFRICASTALKING_USERNAME: ${{ secrets.AFRICASTALKING_USERNAME }}
   AFRICASTALKING_API_KEY: ${{ secrets.AFRICASTALKING_API_KEY }}
   SMS_SENDER: ${{ secrets.SMS_SENDER }}
@@ -22,11 +22,11 @@ env:
   ADMIN_SITE_INDEX_TITLE: ${{ secrets.ADMIN_SITE_INDEX_TITLE }}
   DEBUG: ${{ secrets.DEBUG }}
   API_VERSION: ${{ secrets.API_VERSION }}
-  DB_NAME: ${{ secrets.DB_NAME }}
-  USER: ${{ secrets.USER }}
-  PASSWORD: ${{ secrets.PASSWORD }}
-  HOST: ${{ secrets.HOST }}
-  PORT: ${{ secrets.PORT }}
+  # DB_NAME: ${{ secrets.DB_NAME }}
+  # USER: ${{ secrets.USER }}
+  # PASSWORD: ${{ secrets.PASSWORD }}
+  # HOST: ${{ secrets.HOST }}
+  # PORT: ${{ secrets.PORT }}
 
 
 permissions:

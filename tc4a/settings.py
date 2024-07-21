@@ -10,10 +10,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRET_KEY")
+SECRET_KEY = 'django-insecure-_swyclzifp%_gd0lhlxx=2ax2o=e7=9j*@jwuw6xd&ck4#95dp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config("DEBUG", cast=bool)
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -86,11 +86,11 @@ WSGI_APPLICATION = "tc4a.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": config("DB_NAME"),
-        "USER": config("USER"),
-        "HOST": config("HOST"),
-        "PASSWORD": config("PASSWORD"),
-        "PORT": config("PORT"),
+        "NAME": 'ordering',
+        "USER": 'postgres',
+        "HOST": 'production.crq0omyc6xw4.us-west-2.rds.amazonaws.com',
+        "PASSWORD": 'admin123',
+        "PORT": '5432',
     }
 }
 
