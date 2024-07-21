@@ -7,6 +7,7 @@ WORKDIR /usr/src/app
 
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWEITEBYTECODE 1
+ENV DJANGO_SETTINGS_MODULE=tc4a.settings
 
 RUN apt-get update && apt-get install -y \
     build-essential \
