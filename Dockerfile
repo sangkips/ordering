@@ -48,4 +48,4 @@ USER 1001
 
 EXPOSE $APP_PORT
 
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8000", ".wsgi:application"]
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8000", "tc4a.wsgi.application"]
