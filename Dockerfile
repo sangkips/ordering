@@ -50,8 +50,6 @@ EXPOSE $APP_PORT
 
 RUN chmod +x run.sh
 
-RUN cp run.sh ${APP_HOME}
-
 CMD ["./run.sh"]
 
 
