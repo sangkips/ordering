@@ -86,11 +86,11 @@ WSGI_APPLICATION = "tc4a.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": config("PRIMARY_DB"),
-        "USER": config("PRIMARY_DB_USER"),
-        "HOST": config("PRIMARY_DB_HOST"),
-        "PASSWORD": config("PRIMARY_DB_USER_PASSWORD"),
-        "PORT": config("PRIMARY_DB_PORT"),
+        "NAME": config("DB_NAME"),
+        "USER": config("USER"),
+        "HOST": config("HOST"),
+        "PASSWORD": config("PASSWORD"),
+        "PORT": config("PORT"),
     }
 }
 
