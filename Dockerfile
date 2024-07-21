@@ -48,9 +48,9 @@ USER 1001
 
 EXPOSE $APP_PORT
 
-COPY run.sh ${APP_HOME}
+COPY run.sh /order
 
-RUN chmod +x ${APP_HOME}/run.sh
+RUN chmod +x /order/run.sh
 
 CMD ["./run.sh"]
 
