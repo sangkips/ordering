@@ -16,8 +16,8 @@ public_apis = [
 
 schema_view = get_schema_view(
     openapi.Info(
-        title=config("API_TITLE"),
-        default_version=config("API_VERSION"),
+        title=config("API_TITLE", default=""),
+        default_version=config("API_VERSION", default=""),
         description="These are the main APIs for Ordering Application",
     ),
     public=True,
@@ -44,6 +44,6 @@ urlpatterns += public_apis
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-admin.site.site_header = config("ADMIN_SITE_HEADER")
-admin.site.site_title = config("ADMIN_SITE_TITLE")
-admin.site.index_title = config("ADMIN_SITE_INDEX_TITLE")
+admin.site.site_header = config("ADMIN_SITE_HEADER", default="")
+admin.site.site_title = config("ADMIN_SITE_TITLE", default="")
+admin.site.index_title = config("ADMIN_SITE_INDEX_TITLE", default="")

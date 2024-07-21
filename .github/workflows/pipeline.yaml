@@ -13,15 +13,15 @@ env:
   ECS_TASK_DEFINITION: ecs-app-task
   CONTAINER_NAME: order-app
   # SECRET_KEY: ${{ secrets.SECRET_KEY }}
-  AFRICASTALKING_USERNAME: ${{ secrets.AFRICASTALKING_USERNAME }}
-  AFRICASTALKING_API_KEY: ${{ secrets.AFRICASTALKING_API_KEY }}
-  SMS_SENDER: ${{ secrets.SMS_SENDER }}
-  API_TITLE: ${{ secrets.API_TITLE }}
-  ADMIN_SITE_HEADER: ${{ secrets.ADMIN_SITE_HEADER }}
-  ADMIN_SITE_TITLE: ${{ secrets.ADMIN_SITE_TITLE }}
-  ADMIN_SITE_INDEX_TITLE: ${{ secrets.ADMIN_SITE_INDEX_TITLE }}
-  DEBUG: ${{ secrets.DEBUG }}
-  API_VERSION: ${{ secrets.API_VERSION }}
+  # AFRICASTALKING_USERNAME: ${{ secrets.AFRICASTALKING_USERNAME }}
+  # AFRICASTALKING_API_KEY: ${{ secrets.AFRICASTALKING_API_KEY }}
+  # SMS_SENDER: ${{ secrets.SMS_SENDER }}
+  # API_TITLE: ${{ secrets.API_TITLE }}
+  # ADMIN_SITE_HEADER: ${{ secrets.ADMIN_SITE_HEADER }}
+  # ADMIN_SITE_TITLE: ${{ secrets.ADMIN_SITE_TITLE }}
+  # ADMIN_SITE_INDEX_TITLE: ${{ secrets.ADMIN_SITE_INDEX_TITLE }}
+  # DEBUG: ${{ secrets.DEBUG }}
+  # API_VERSION: ${{ secrets.API_VERSION }}
   # DB_NAME: ${{ secrets.DB_NAME }}
   # USER: ${{ secrets.USER }}
   # PASSWORD: ${{ secrets.PASSWORD }}

@@ -10,12 +10,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_swyclzifp%_gd0lhlxx=2ax2o=e7=9j*@jwuw6xd&ck4#95dp'
+SECRET_KEY = config("SECRET_KEY", default="")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = config("DEBUG", cast=bool, default="")
 
-ALLOWED_HOSTS = ["0.0.0.0"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     "drf_yasg",
     "djoser",
     "corsheaders",
-    "whitenoise.runserver_nostatic",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -58,7 +57,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "tc4a.urls"
@@ -88,11 +86,11 @@ WSGI_APPLICATION = "tc4a.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": 'ordering',
-        "USER": 'postgres',
-        "HOST": 'production.crq0omyc6xw4.us-west-2.rds.amazonaws.com',
-        "PASSWORD": 'admin123',
-        "PORT": '5432',
+        "NAME": config("PRIMARY_DB", default=""),
+        "USER": config("PRIMARY_DB_USER", default=""),
+        "HOST": config("PRIMARY_DB_HOST", default=""),
+        "PASSWORD": config("PRIMARY_DB_USER_PASSWORD", default=""),
+        "PORT": config("PRIMARY_DB_PORT", default=""),
     }
 }
 
