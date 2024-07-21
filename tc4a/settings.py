@@ -10,10 +10,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRET_KEY", default="")
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config("DEBUG", cast=bool, default="")
+DEBUG = config("DEBUG", cast=bool)
 
 ALLOWED_HOSTS = ["*"]
 
@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     "djoser",
     "corsheaders",
+    "whitenoise.runserver_nostatic",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -57,6 +58,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "tc4a.urls"
@@ -86,11 +88,11 @@ WSGI_APPLICATION = "tc4a.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": config("PRIMARY_DB", default=""),
-        "USER": config("PRIMARY_DB_USER", default=""),
-        "HOST": config("PRIMARY_DB_HOST", default=""),
-        "PASSWORD": config("PRIMARY_DB_USER_PASSWORD", default=""),
-        "PORT": config("PRIMARY_DB_PORT", default=""),
+        "NAME": config("PRIMARY_DB"),
+        "USER": config("PRIMARY_DB_USER"),
+        "HOST": config("PRIMARY_DB_HOST"),
+        "PASSWORD": config("PRIMARY_DB_USER_PASSWORD"),
+        "PORT": config("PRIMARY_DB_PORT"),
     }
 }
 
@@ -165,3 +167,12 @@ SIMPLE_JWT = {
 }
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
