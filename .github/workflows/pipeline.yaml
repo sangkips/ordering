@@ -22,11 +22,11 @@ env:
   ADMIN_SITE_INDEX_TITLE: ${{ secrets.ADMIN_SITE_INDEX_TITLE }}
   DEBUG: ${{ secrets.DEBUG }}
   API_VERSION: ${{ secrets.API_VERSION }}
-  DB_NAME: ${{ DB_NAME }}
-  USER: ${{ USER }}
-  PASSWORD: ${{ PASSWORD }}
-  HOST: ${{ HOST }}
-  PORT: ${{ PORT }}
+  DB_NAME: ${{ secrets.DB_NAME }}
+  USER: ${{ secrets.USER }}
+  PASSWORD: ${{ secrets.PASSWORD }}
+  HOST: ${{ secrets.HOST }}
+  PORT: ${{ secrets.PORT }}
 
 
 permissions:
