@@ -48,4 +48,4 @@ USER 1001
 
 EXPOSE $APP_PORT
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "atc4a.wsgi:application", "-w", "2"]
+CMD ["./run.sh"]
