@@ -1,4 +1,4 @@
-ARG PYTHON_VERSION=3.12-slim
+ARG PYTHON_VERSION=3.12
 
 # Builder Image
 FROM python:${PYTHON_VERSION}-slim-bullseye as builder
@@ -12,14 +12,14 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     libpq-dev
 
-RUN pip install --upgrade pip pipenv
-COPY requirements.txt ./
+RUN pip install --upgrade pip
+COPY requirements.txt .
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
 
 # Final Image
 FROM python:${PYTHON_VERSION}-slim-bullseye
 
-ENV APP_HOME=/athens \ 
+ENV APP_HOME=/order \ 
     APP_PORT=8000
 
 RUN mkdir $APP_HOME
@@ -42,12 +42,10 @@ COPY . $APP_HOME
 
 RUN mkdir $APP_HOME/logs
 
-RUN python download_creds_files.py
-
 RUN chown -R 1001:1001 $APP_HOME
 
 USER 1001
 
 EXPOSE $APP_PORT
 
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8000", "tc4a.wsgi.application"]
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8000", ".wsgi:application"]

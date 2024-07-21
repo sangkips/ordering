@@ -53,4 +53,9 @@ jobs:
           ADMIN_SITE_INDEX_TITLE: ${{ secrets.ADMIN_SITE_INDEX_TITLE }}
           DEBUG: ${{ secrets.DEBUG }}
           API_VERSION: ${{ secrets.API_VERSION }}
+          PRIMARY_DB: ${{ PRIMARY_DB }}
+          PRIMARY_DB_USER: ${{ PRIMARY_DB_USER }}
+          PRIMARY_DB_USER_PASSWORD: ${{ PRIMARY_DB_USER_PASSWORD }}
+          PRIMARY_DB_HOST: ${{ PRIMARY_DB_HOST }}
+          PRIMARY_DB_PORT: ${{ PRIMARY_DB_PORT }}
 
