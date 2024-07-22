@@ -49,14 +49,8 @@ USER 1001
 
 EXPOSE $APP_PORT
 
-RUN sed -i 's/\r$//' run.sh  && \
-    chmod +x run.sh
+RUN chmod +x run.sh
 
-COPY . .
-
-# RUN chmod +x run.sh
-
-ENTRYPOINT run.sh
-# CMD ["./run.sh"]
+CMD ["./run.sh"]
 
 

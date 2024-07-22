@@ -1,6 +1,9 @@
 from pathlib import Path
 from decouple import config
 from datetime import timedelta
+from utils.s3 import SSMParameterStore
+
+ssm = SSMParameterStore(prefix='/dev/djangoapi/db')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,10 +13,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-_swyclzifp%_gd0lhlxx=2ax2o=e7=9j*@jwuw6xd&ck4#95dp"
+SECRET_KEY = config('SECRET_KEY')
+# SECRET_KEY = ssm['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config("DEBUG", default=False, cast=bool)
 
 ALLOWED_HOSTS = ["*"]
 
@@ -95,6 +99,18 @@ DATABASES = {
         "PORT": config("PRIMARY_DB_PORT"),
     }
 }
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql_psycopg2",
+#         "NAME": ssm['PRIMARY_DB'],
+#         "USER": ssm['PRIMARY_DB_USER'],
+#         "HOST": ssm['PRIMARY_DB_HOST'],
+#         "PASSWORD": ssm['password'],
+#         "PORT": ssm['PRIMARY_DB_PORT'],
+#     }
+# }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
