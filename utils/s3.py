@@ -9,7 +9,7 @@ class SSMParameterStore(object):
 
     def __init__(self, prefix=None, ssm_client=None, ttl=None):
         self._prefix = (prefix or "").rstrip("/") + "/"
-        self._client = ssm_client or boto3.client("ssm")
+        self._client = ssm_client or boto3.client("ssm", region_name="us-west-2")
         self._keys = None
         self._substores = {}
         self._ttl = ttl
