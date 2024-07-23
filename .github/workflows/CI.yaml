@@ -17,11 +17,11 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_HOST: localhost
-      POSTGRES_DB: testing
-      POSTGRES_PORT: 5432
+      PRIMARY_DB_USER: postgres
+      PRIMARY_DB_USER_PASSWORD: postgres
+      PRIMARY_DB_HOST: localhost
+      PRIMARY_DB: testing
+      PRIMARY_DB_PORT: 5432
       SECRET_KEY: this-is-my-secret-key
     services:
       postgres_main:
@@ -57,12 +57,12 @@ jobs:
       - name: Run Tests
         env:
           DEBUG: "0"
-          DJANGO_SECRET_KEY: ${{ env.DJANGO_SECRET_KEY }}
-          DB_USERNAME: ${{ env.POSTGRES_USER }}
-          DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
-          DB_HOST: ${{ env.POSTGRES_HOST }}
-          DB_DATABASE: ${{ env.POSTGRES_DB }}
-          DB_PORT: ${{ env.POSTGRES_PORT }}
+          SECRET_KEY: ${{ env.SECRET_KEY }}
+          PRIMARY_DB_USER: ${{ env.PRIMARY_DB_USER }}
+          PRIMARY_DB_USER_PASSWORD: ${{ env.PRIMARY_DB_USER_PASSWORD }}
+          PRIMARY_DB_HOST: ${{ env.PRIMARY_DB_HOST }}
+          PRIMARY_DB: ${{ env.PRIMARY_DB }}
+          PRIMARY_DB_PORT: ${{ env.PRIMARY_DB_PORT }}
         run: |
           python manage.py test
 
