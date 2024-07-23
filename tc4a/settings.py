@@ -2,7 +2,7 @@ from pathlib import Path
 from decouple import config
 from datetime import timedelta
 from utils.s3 import SSMParameterStore
-from os.path import join, dirname, abspath
+from os.path import dirname, abspath
 
 DJANGO_ROOT = dirname(dirname(abspath(__file__)))
 
