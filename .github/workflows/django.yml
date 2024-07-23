@@ -28,6 +28,6 @@ jobs:
     - name: Run Tests
       env:
         DJANGO_SETTINGS_MODULE: tc4a.settings
-        SECRET_KEY: {{secrets.SECRET_KEY}}
+        SECRET_KEY: 'secret_key'
       run: |
         python manage.py test
