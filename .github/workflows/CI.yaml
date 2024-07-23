@@ -31,7 +31,7 @@ jobs:
         DEBUG: True
         PRIMARY_DB: ordering
         PRIMARY_DB_USER: postgres
-        PRIMARY_DB_PASSWORD: zx0011
+        PRIMARY_DB_USER_PASSWORD: zx0011
         PRIMARY_DB_HOST: localhost
         PRIMARY_DB_PORT: 5432
       run: |
