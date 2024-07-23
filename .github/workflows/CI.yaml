@@ -16,6 +16,23 @@ jobs:
     if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
 
+    env:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST: localhost
+      POSTGRES_DB: testing
+      POSTGRES_PORT: 5432
+      DJANGO_SECRET_KEY: test-key-not-good
+    services:
+      postgres_main:
+        image: postgres:15
+        env:
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ env.POSTGRES_DB }}
+        ports:
+          - 5432:5432
+
     strategy:
       matrix:
         python-version: [3.12]
@@ -38,24 +55,14 @@ jobs:
         uses: chartboost/ruff-action@v1
           
       - name: Run Tests
-        run: |
-          export DJANGO_SETTINGS_MODULE="tc4a.settings"
-          make test
-
         env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          AFRICASTALKING_USERNAME: ${{ secrets.AFRICASTALKING_USERNAME }}
-          AFRICASTALKING_API_KEY: ${{ secrets.AFRICASTALKING_API_KEY }}
-          SMS_SENDER: ${{ secrets.SMS_SENDER }}
-          API_TITLE: ${{ secrets.API_TITLE }}
-          ADMIN_SITE_HEADER: ${{ secrets.ADMIN_SITE_HEADER }}
-          ADMIN_SITE_TITLE: ${{ secrets.ADMIN_SITE_TITLE }}
-          ADMIN_SITE_INDEX_TITLE: ${{ secrets.ADMIN_SITE_INDEX_TITLE }}
-          DEBUG: ${{ secrets.DEBUG }}
-          API_VERSION: ${{ secrets.API_VERSION }}
-          PRIMARY_DB: ${{ secrets.PRIMARY_DB }}
-          PRIMARY_DB_USER: ${{ secrets.PRIMARY_DB_USER }}
-          PRIMARY_DB_USER_PASSWORD: ${{ secrets.PRIMARY_DB_USER_PASSWORD }}
-          PRIMARY_DB_HOST: ${{ secrets.PRIMARY_DB_HOST }}
-          PRIMARY_DB_PORT: ${{ secrets.PRIMARY_DB_PORT }}
+          DEBUG: "0"
+          DJANGO_SECRET_KEY: ${{ env.DJANGO_SECRET_KEY }}
+          DB_USERNAME: ${{ env.POSTGRES_USER }}
+          DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          DB_HOST: ${{ env.POSTGRES_HOST }}
+          DB_DATABASE: ${{ env.POSTGRES_DB }}
+          DB_PORT: ${{ env.POSTGRES_PORT }}
+        run: |
+          python manage.py test
 
