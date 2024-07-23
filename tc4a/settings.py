@@ -2,6 +2,9 @@ from pathlib import Path
 from decouple import config
 from datetime import timedelta
 from utils.s3 import SSMParameterStore
+from os.path import join, dirname, abspath
+
+DJANGO_ROOT = dirname(dirname(abspath(__file__)))
 
 ssm = SSMParameterStore(prefix="/dev/djangoapi/db")
 
@@ -97,9 +100,15 @@ DATABASES = {
         "HOST": config("PRIMARY_DB_HOST"),
         "PASSWORD": config("PRIMARY_DB_USER_PASSWORD"),
         "PORT": config("PRIMARY_DB_PORT"),
-    }
+    },
+    'TEST': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': join(DJANGO_ROOT, 'run', 'dev.sqlite3'),
+
+    },
 }
 
+# AWS parameter store 
 # DATABASES = {
 #     "default": {
 #         "ENGINE": "django.db.backends.postgresql_psycopg2",
