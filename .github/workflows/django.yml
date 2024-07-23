@@ -29,5 +29,10 @@ jobs:
       env:
         DJANGO_SETTINGS_MODULE: tc4a.settings
         SECRET_KEY: 'secret_key'
+        PRIMARY_DB: 'primary_db'
+        PRIMARY_DB_USER: 'primary_db_user'
+        PRIMARY_DB_HOST: 'primary_db_host'
+        PRIMARY_DB_PORT: 'primary_db_port'
+        PRIMARY_DB_USER_PASSWORD: 'primary_db_password'
       run: |
         python manage.py test
