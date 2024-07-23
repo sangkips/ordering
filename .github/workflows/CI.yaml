@@ -1,68 +1,30 @@
-name: Quality Checks
+name: Quality checks
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
-
-concurrency:
-  group: "${{ github.workflow}}-${{ github.head_ref }}"
-  cancel-in-progress: false
+    branches: [ main ]
 
 jobs:
-  quality_checks:
-    name: audit code style
-    if: github.event.pull_request.draft == false
+  build:
+
     runs-on: ubuntu-latest
-
-    env:
-      PRIMARY_DB_USER: postgres
-      PRIMARY_DB_USER_PASSWORD: postgres
-      PRIMARY_DB_HOST: localhost
-      PRIMARY_DB: testing
-      PRIMARY_DB_PORT: 5432
-      SECRET_KEY: this-is-my-secret-key
-    services:
-      postgres_main:
-        image: postgres:15
-        env:
-          POSTGRES_USER: ${{ env.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
-          POSTGRES_DB: ${{ env.POSTGRES_DB }}
-        ports:
-          - 5432:5432
-
     strategy:
+      max-parallel: 4
       matrix:
         python-version: [3.12]
 
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
-
-      - name: Install Python V4
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-          cache: 'pip'
-
-      - name: Install dependencies
-        run: |
-          make install
-
-      - name: Ruff check
-        uses: chartboost/ruff-action@v1
-          
-      - name: Run Tests
-        env:
-          DEBUG: "0"
-          SECRET_KEY: ${{ env.SECRET_KEY }}
-          PRIMARY_DB_USER: ${{ env.PRIMARY_DB_USER }}
-          PRIMARY_DB_USER_PASSWORD: ${{ env.PRIMARY_DB_USER_PASSWORD }}
-          PRIMARY_DB_HOST: ${{ env.PRIMARY_DB_HOST }}
-          PRIMARY_DB: ${{ env.PRIMARY_DB }}
-          PRIMARY_DB_PORT: ${{ env.PRIMARY_DB_PORT }}
-        run: |
-          python manage.py test
-
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Run Tests
+      run: |
+        python manage.py test

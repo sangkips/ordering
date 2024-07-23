@@ -100,12 +100,8 @@ DATABASES = {
         "HOST": config("PRIMARY_DB_HOST"),
         "PASSWORD": config("PRIMARY_DB_USER_PASSWORD"),
         "PORT": config("PRIMARY_DB_PORT"),
-    },
-    'TEST': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 
-    },
 }
 
 # AWS parameter store 
