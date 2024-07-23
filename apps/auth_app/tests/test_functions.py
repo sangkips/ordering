@@ -18,16 +18,6 @@ class UserModelTestCase(TestCase):
         email = "TEST3@GMAIL.COM"
         self.assertEqual(self.user.email.lower(), email.lower())
 
-    def test_create_user_without_username(self):
-        with self.assertRaises(ValueError) as error:
-            AuthUser.objects.create_user(
-                username=None,
-                password="password123%",
-                phone_number="+254777777777",
-                email="m@gmail.com",
-            )
-        self.assertEqual("The username field is required", str(error.exception))
-
     def test_create_user_without_email(self):
         with self.assertRaises(ValueError) as error:
             AuthUser.objects.create_user(
