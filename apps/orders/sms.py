@@ -13,7 +13,7 @@ data = {
     "username": config("AFRICASTALKING_USERNAME"),
     "from": config("SMS_SENDER"),
     "message": "Thank you for your order. We will reach out to you shortly.",
-    "to": "+254729640480",
+    "to": config("SMS_RECIPIENT"),
 }
 
 

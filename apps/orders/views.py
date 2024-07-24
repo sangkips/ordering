@@ -117,8 +117,14 @@ class OrderDetailsView(generics.GenericAPIView):
             serializer.save()
             send_sms = make_post_request()
             if send_sms.status_code == 201:
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                return Response(
+                    serializer.data,
+                    status=status.HTTP_201_CREATED
+                )
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
 
 class OrderDetailById(generics.GenericAPIView):
