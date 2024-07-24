@@ -20,5 +20,5 @@ class OrderDetailsSerializer(serializers.ModelSerializer):
 class ProductCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
-        fields = ["id", "name", "price", "created_at"]
+        fields = "__all__"
         read_only_fields = ["id"]

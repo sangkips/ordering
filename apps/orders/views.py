@@ -4,6 +4,7 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.shortcuts import get_object_or_404
 from drf_yasg import openapi
+from django.core.cache import cache
 
 from apps.orders.models import Item, Order, OrderDetail
 from apps.orders.serializers import (
@@ -158,13 +159,18 @@ class OrderSearchView(generics.GenericAPIView):
         # Ensure its timezone aware
         start_date = request.GET.get("start_date")
         end_date = request.GET.get("end_date")
+        
+        cache_data = cache.get(f"orders_{start_date}_{end_date}") 
 
         if start_date and end_date:
             search = OrderDetail.objects.filter(
                 created_at__range=[start_date, end_date]
             )
             serializer = self.serializer_class(search, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            data = serializer.data
+            # cache data for a period of 30 days or more depending on your use
+            cache.set(cache_data,data, timeout=60 * 60 * 24 * 30)
+            return Response(data, status=status.HTTP_200_OK)
         else:
             return Response(
                 {"error": "Both start_date and end_date are required."},
